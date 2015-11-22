@@ -61,24 +61,21 @@ data_files.extend(data_files_config('docs','src/docs','*.gif'))
 #You must define a variable like the one below.
 #It will be used to collect entries without installing the package
 janitoo_entry_points = {
-    "janitoo_admin.socketio": [
-        "janitoo_admin_proxy = janitoo_admin_proxy.app.socket.janitoo",
+    "janitoo_manager.blueprint": [
+        "janitoo_manager_proxy = janitoo_manager_proxy.views:get_blueprint",
     ],
-    "janitoo_admin.views": [
-        "janitoo_admin_proxy = janitoo_admin_proxy.app.views",
+    "janitoo_manager.menu_left": [
+        "janitoo_manager_proxy = janitoo_manager_proxy.views:get_leftmenu",
     ],
-    "janitoo_admin.widget": [
-        "janitoo_admin_proxy = janitoo_admin_proxy.app:deploy_widget",
-    ],
-    'janitoo_admin.network': [
-        'janitoo_admin_proxy = janitoo_admin_proxy.app.network:extend',
+    'janitoo_manager.network': [
+        'janitoo_manager_proxy = janitoo_manager_proxy.network:extend',
     ],
 }
 
 setup(
-    name = 'janitoo_admin_proxy',
-    description = "Example of a proxy for the web admin",
-    long_description = "Example of a proxy for the web admin",
+    name = 'janitoo_manager_proxy',
+    description = "A proxy for the web manager",
+    long_description = "Also a good example of how to write an extension for janitoo_manager",
     author='Sébastien GALLET aka bibi2100 <bibi21000@gmail.com>',
     author_email='bibi21000@gmail.com',
     url='http://bibi21000.gallet.info/',
@@ -105,7 +102,7 @@ setup(
     package_dir = {'' : 'src' },
     packages = find_packages('src', exclude=["scripts", "libraries", "docs", "config"]),
     install_requires = [
-                     'janitoo_admin == %s'%janitoo_version,
+                     'janitoo_manager >= %s'%"0.0.6",
                     ],
     #include_package_data=True,
     include_package_data=True,

@@ -26,10 +26,3 @@ try:
 except:  # pragma: no cover
     # bootstrapping
     pass # pragma: no cover
-
-import os
-from janitoo_web.app import app_deploy_template, app_deploy_widget
-
-def deploy_widget(destination):
-    source = os.path.dirname(os.path.realpath(__file__))
-    app_deploy_widget(source, destination)
