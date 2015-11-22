@@ -104,6 +104,9 @@ setup(
     install_requires = [
                      'janitoo_manager >= %s'%"0.0.6",
                     ],
+    dependency_links = [
+      'https://github.com/bibi21000/janitoo_manager/archive/master.zip#egg=janitoo_manager-%s'%"0.0.7",
+    ],
     #include_package_data=True,
     include_package_data=True,
     data_files = data_files,
