@@ -1,16 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""The main views
-
-Thinking about rooms.
-- A room for the network : state,
-- A room for nodes : list, add, remove, ...
-- A room for each nodes (nodeid_1): values, parameters, ...
-- A room for the controller
-- A room for values
-
-When joining a room, you will receive message from it.
-
+"""The proxy views
 """
 
 __license__ = """
@@ -37,35 +27,39 @@ from gevent import monkey
 monkey.patch_all()
 
 import logging
-logger = logging.getLogger('janitoo.web')
+logger = logging.getLogger('janitoo.manager')
 
+import os, sys
+import time
+from threading import Thread
 import httplib
 import re
 import urllib
 import urlparse
 import json
 
-
-import os, sys
-import time
-from threading import Thread
-
-from flask import Flask, render_template, session, request, current_app, g
-from flask.ext.socketio import SocketIO, emit, join_room, leave_room, close_room, disconnect
+from flask import Blueprint, flash
+from flask import Flask, session, request, current_app, g
 from flask import Response, url_for
 from werkzeug.datastructures import Headers
 from werkzeug.exceptions import NotFound
+from flask_themes2 import get_themes_list
+from flask_babelex import gettext as _
 
-from janitoo_web.app import socketio, app, sort_application_entries, sorted_application_entries
-from janitoo_web.app.listener import listener
+from janitoo_manager.extensions import babel, janitoo
+from janitoo_manager.utils.helpers import render_template
 
-app.extensions['application_entries']['/proxy'] = { 'order':99, 'label':'Proxy'}
-app.extensions['sorted_application_entries'] = sort_application_entries(app.extensions['application_entries'])
+#~ from flask import Flask, render_template, session, request, current_app, g
+#~ from flask.ext.socketio import SocketIO, emit, join_room, leave_room, close_room, disconnect
+#~ from flask import Response, url_for
+#~ from werkzeug.datastructures import Headers
+#~ from werkzeug.exceptions import NotFound
+#~
+#~ from janitoo_web.app import socketio, app, sort_application_entries, sorted_application_entries
+#~ from janitoo_web.app.listener import listener
 
-
-# Default Configuration
-DEBUG_FLAG = True
-LISTEN_PORT = 7788
+#~ app.extensions['application_entries']['/proxy'] = { 'order':99, 'label':'Proxy'}
+#~ app.extensions['sorted_application_entries'] = sort_application_entries(app.extensions['application_entries'])
 
 # You can insert Authentication here.
 #proxy.before_request(check_login)
@@ -78,6 +72,11 @@ CSS_REGEX = re.compile(r'(url\(["\']?)/')
 
 REGEXES = [HTML_REGEX, JQUERY_REGEX, JS_LOCATION_REGEX, CSS_REGEX]
 
+def get_blueprint():
+    return proxy, "/proxy"
+
+def get_leftmenu():
+    return "<a href='/proxy/'>Proxy</a>"
 
 def iterform(multidict):
     for key in multidict.keys():
@@ -93,21 +92,24 @@ def parse_host_port(h):
         host_port[1] = int(host_port[1])
         return host_port
 
-@app.route('/proxy')
-def proxy():
-    network=app.extensions['listener'].network
+proxy = Blueprint("proxy", __name__, template_folder='templates', static_folder='static')
+
+@proxy.route('')
+@proxy.route('/')
+def index():
+    network=janitoo.listener.network
     web_servers=network.find_webcontrollers()
     web_resources=network.find_webresources()
     return render_template('proxy/index.html', web_servers=web_servers, web_resources=web_resources)
 
-# For RESTful Service
-@app.route('/proxy/<host>/', methods=["GET", "POST", "PUT", "DELETE"])
-@app.route('/proxy/<host>/<path:file>', methods=["GET", "POST", "PUT", "DELETE"])
+@proxy.route('/<string:host>', methods=["GET", "POST", "PUT", "DELETE"])
+@proxy.route('/<string:host>/', methods=["GET", "POST", "PUT", "DELETE"])
+@proxy.route('/<string:host>/<path:file>', methods=["GET", "POST", "PUT", "DELETE"])
 def proxy_request(host, file=""):
     hostname, port = parse_host_port(host)
 
-    print "H: '%s' P: %d" % (hostname, port)
-    print "F: '%s'" % (file)
+    #~ print "H: '%s' P: %d" % (hostname, port)
+    #~ print "F: '%s'" % (file)
     # Whitelist a few headers to pass on
     request_headers = {}
     for h in ["Cookie", "Referer", "X-Csrf-Token"]:
@@ -171,6 +173,8 @@ def proxy_request(host, file=""):
     root = url_for(".proxy_request", host=host)
     contents = resp.read()
 
+    #~ print root
+    #~ print contents
     # Restructing Contents.
     if d["content-type"].find("application/json") >= 0:
         # JSON format conentens will be modified here.
@@ -184,6 +188,7 @@ def proxy_request(host, file=""):
         for regex in REGEXES:
            contents = regex.sub(r'\1%s' % root, contents)
 
+    #~ print contents
     flask_response = Response(response=contents,
                               status=resp.status,
                               headers=response_headers,

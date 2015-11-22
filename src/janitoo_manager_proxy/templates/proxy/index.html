@@ -1,0 +1,50 @@
+{% extends theme("layout.html") %}
+
+{% block head %}
+<h1 class="page-header"> <i class="fa fa-table fa-fw">&nbsp;{% trans %}Proxy{% endtrans %}</h1></i>
+{% endblock %}
+
+{% block content %}
+<div id='proxy_content'>
+      <h2>Collected web resources</h2>
+      <h3>Nodes :</h3>
+      <dl>
+          {% for keynode, node in web_servers.iteritems() %}
+            {% for keyvalue, value in node.iteritems() %}
+                {% for index in value %}
+                    <dd>{{ keynode }} : {{ value[index]['label'] }} ({{ value[index]['help'] }}) </dd>
+                {% endfor %}
+            {% endfor %}
+          {% endfor %}
+      </dl>
+
+      <h3>Resources :</h3>
+      <dl>
+          {% for keynode, node in web_resources.iteritems() %}
+            {% for keyvalue, value in node.iteritems() %}
+                {% for index in value %}
+                    <dd>{{ keynode }} : <a id="{{ value[index]['hadd'] }}_{{ value[index]['uuid'] }}_{{ value[index]['index'] }}" href="/proxy/{{ value[index]['data'] }}">{{ value[index]['uuid'] }} {{ value[index]['label'] }} ({{ value[index]['help'] }})</a> </dd>
+                        <script type="text/javascript">
+                            $(document).ready(function(){
+                                $('#{{ value[index]["hadd"] }}_{{ value[index]["uuid"] }}_{{ value[index]["index"] }}').click(function () {
+                                    //~ $('#proxy_content2').load($(this).attr('href'));
+                                    console.log("/proxy/{{ value[index]['data'] }}");
+                                });
+                                //~ $('#{{ value[index]["hadd"] }}_{{ value[index]["uuid"] }}_{{ value[index]["index"] }}').click(function () {
+                                    //~ console.log("click");
+                                    //~ $.get("/proxy/{{ value[index]['data'] }}").done(function(data) {
+                                                //~ $('#proxy_content2').html(data);
+                                                //~ console.log(data);
+                                            //~ });
+                                //~ });
+                            });
+                        </script>
+                {% endfor %}
+            {% endfor %}
+          {% endfor %}
+      </dl>
+  </div>'
+<div id='proxy_content2'>
+</div>
+{% endblock %}
+
