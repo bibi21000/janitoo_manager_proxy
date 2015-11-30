@@ -77,5 +77,6 @@ class TestLiveFlask(JNTTFlaskLive, JNTTFlaskLiveCommon):
 
     def test_001_server_is_up_and_running(self):
         self.list_routes()
+        self.assertUrl('/proxy', 200)
         self.assertUrl('/proxy/', 200)
 
