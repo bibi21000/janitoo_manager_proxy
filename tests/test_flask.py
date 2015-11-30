@@ -30,9 +30,13 @@ import threading
 import logging
 from pkg_resources import iter_entry_points
 
+from janitoo_manager import create_app
+from janitoo_manager.extensions import db, plugin_manager, socketio
+
 from janitoo_nosetests.server import JNTTServer, JNTTServerCommon
 from janitoo_nosetests.thread import JNTTThread, JNTTThreadCommon
 from janitoo_nosetests.flask import JNTTFlask, JNTTFlaskCommon
+from janitoo_nosetests.flask import JNTTFlaskLive, JNTTFlaskLiveCommon
 
 from janitoo.utils import json_dumps, json_loads
 from janitoo.utils import HADD_SEP, HADD
@@ -55,6 +59,23 @@ assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 class TestFlask(JNTTFlask, JNTTFlaskCommon):
     """Test flask
     """
-    flask_conf = "tests/data/janitoo_flask.conf"
-
+    flask_conf = "tests/data/janitoo_manager.conf"
     pass
+
+class TestLiveFlask(JNTTFlaskLive, JNTTFlaskLiveCommon):
+    """Test flask
+    """
+    flask_conf = "tests/data/janitoo_manager.conf"
+
+    def create_app(self):
+        # Use the development configuration if available
+        from janitoo_manager.configs.testing import TestingConfig
+        config = TestingConfig(self.flask_conf)
+        app = create_app(config)
+        app.config['LIVESERVER_PORT'] = 8943
+        return app
+
+    def test_001_server_is_up_and_running(self):
+        self.list_routes()
+        self.assertUrl('/proxy/', 200)
+
