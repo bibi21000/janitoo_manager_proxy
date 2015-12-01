@@ -62,7 +62,7 @@ class TestLiveFlask(JNTTFlaskLive, JNTTFlaskLiveCommon):
         app.config['LIVESERVER_PORT'] = 8943
         return app
 
-    def test_001_server_is_up_and_running(self):
+    def test_001_proxy_home_is_up(self):
         self.list_routes()
         self.assertUrl('/proxy', 200)
         self.assertUrl('/proxy/', 200)
