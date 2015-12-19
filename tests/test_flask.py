@@ -29,11 +29,17 @@ import unittest
 import threading
 import logging
 
-from janitoo_manager import create_app
-from janitoo_manager.extensions import db, plugin_manager, socketio
+from alembic import command as alcommand
+from sqlalchemy import create_engine
+from alembic import command as alcommand
+
+from janitoo_manager.app import create_app
+from janitoo_manager.extensions import db, socketio
+from janitoo_manager.configs.testing import TestingConfig
 
 from janitoo_nosetests.flask import JNTTFlask, JNTTFlaskCommon
 from janitoo_nosetests.flask import JNTTFlaskLive, JNTTFlaskLiveCommon
+from janitoo_nosetests import JNTTBase
 
 from janitoo.utils import json_dumps, json_loads
 from janitoo.utils import HADD_SEP, HADD
@@ -42,28 +48,41 @@ from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
 from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 
+from janitoo.options import JNTOptions
+from janitoo_db.base import Base, create_db_engine
+from janitoo_db.migrate import Config as alConfig, collect_configs, janitoo_config
 
-class TestFlask(JNTTFlask, JNTTFlaskCommon):
-    """Test flask
-    """
-    flask_conf = "tests/data/janitoo_manager.conf"
-    pass
-
-class TestLiveFlask(JNTTFlaskLive, JNTTFlaskLiveCommon):
+class ManagerCommon(object):
     """Test flask
     """
     flask_conf = "tests/data/janitoo_manager.conf"
 
     def create_app(self):
-        # Use the development configuration if available
-        from janitoo_manager.configs.testing import TestingConfig
-        config = TestingConfig(self.flask_conf)
-        app = create_app(config)
+        # Use the testing configuration
+        self.config = TestingConfig(self.flask_conf)
+        alcommand.upgrade(janitoo_config(self.config.SQLALCHEMY_DATABASE_URI), 'heads')
+        app = create_app(self.config)
         app.config['LIVESERVER_PORT'] = 8943
         return app
 
-    def test_001_proxy_home_is_up(self):
-        self.list_routes()
-        self.assertUrl('/proxy', 200)
-        self.assertUrl('/proxy/', 200)
+class TestApp(JNTTBase, ManagerCommon):
+    """Test app
+    """
+    def test_001_create_app(self):
+        app = self.create_app()
+
+class TestFlask(ManagerCommon, JNTTFlask, JNTTFlaskCommon):
+    """Test flask
+    """
+    flask_conf = "tests/data/janitoo_manager.conf"
+    pass
+
+class TestLiveFlask(ManagerCommon, JNTTFlaskLive, JNTTFlaskLiveCommon):
+    """Test flask
+    """
+    flask_conf = "tests/data/janitoo_manager.conf"
+
+    #~ def test_001_proxy_home_is_up(self):
+        #~ self.list_routes()
+        #~ self.assertUrl('/proxy', 200)
 
