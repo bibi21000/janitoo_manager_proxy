@@ -85,7 +85,7 @@ class TestLiveFlask(ManagerCommon, JNTTFlaskLive, JNTTFlaskLiveCommon):
     """
     flask_conf = "tests/data/janitoo_manager.conf"
 
-    #~ def test_001_proxy_home_is_up(self):
-        #~ self.list_routes()
-        #~ self.assertUrl('/proxy', 200)
-
+    def test_001_server_home_is_up(self):
+        self.list_routes()
+        self.assertUrl('/proxy/', 200)
+        time.sleep(2)
