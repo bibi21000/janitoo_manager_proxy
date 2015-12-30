@@ -75,7 +75,10 @@ class TestFlask(ManagerCommon, JNTTFlask, JNTTFlaskCommon):
     """Test flask
     """
     flask_conf = "tests/data/janitoo_manager.conf"
-    pass
+
+    def test_001_endpoint(self):
+        self.assertEndpoint('proxy.index')
+        self.assertEndpoint('proxy.proxy_request')
 
 class TestLiveFlask(ManagerCommon, JNTTFlaskLive, JNTTFlaskLiveCommon):
     """Test flask
