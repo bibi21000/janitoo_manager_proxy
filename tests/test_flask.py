@@ -38,7 +38,6 @@ from janitoo_manager.extensions import db, socketio
 from janitoo_manager.configs.testing import TestingConfig
 
 from janitoo_nosetests_flask.flask import JNTTFlask, JNTTFlaskCommon
-from janitoo_nosetests_flask.flask import JNTTFlaskLive, JNTTFlaskLiveCommon
 from janitoo_nosetests import JNTTBase
 
 from janitoo.utils import json_dumps, json_loads
@@ -76,17 +75,11 @@ class TestFlask(ManagerCommon, JNTTFlask, JNTTFlaskCommon):
     """
     flask_conf = "tests/data/janitoo_manager.conf"
 
-    def test_011_endpoints(self):
+    def test_111_endpoints(self):
         self.assertEndpoint('proxy.index')
         self.assertEndpoint('proxy.proxy_request')
 
-class TestLiveFlask(ManagerCommon, JNTTFlaskLive, JNTTFlaskLiveCommon):
-    """Test flask
-    """
-    flask_conf = "tests/data/janitoo_manager.conf"
-
-    def test_001_server_home_is_up(self):
-        self.wipTest()
+    def test_201_admin_is_up(self):
         self.list_routes()
-        self.assertUrl('/proxy/', 200)
-        time.sleep(2)
+        self.assertUrl('/proxy/', "200 OK")
+
