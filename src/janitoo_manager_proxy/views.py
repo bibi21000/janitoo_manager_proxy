@@ -23,8 +23,8 @@ along with janitoo. If not, see http://www.gnu.org/licenses.
 """
 __author__ = 'Sébastien GALLET aka bibi21000'
 __email__ = 'bibi21000@gmail.com'
-from gevent import monkey
-monkey.patch_all()
+#~ from gevent import monkey
+#~ monkey.patch_all()
 
 import logging
 logger = logging.getLogger(__name__)
