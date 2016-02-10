@@ -117,10 +117,10 @@ setup(
     package_dir = {'' : 'src' },
     packages = find_packages('src', exclude=["scripts", "libraries", "docs", "config"]),
     install_requires = [
-                     'janitoo_manager >= %s'%"0.0.6",
+                     'janitoo_manager',
                     ],
     dependency_links = [
-      'https://github.com/bibi21000/janitoo_manager/archive/master.zip#egg=janitoo_manager-%s'%"0.0.7",
+      'https://github.com/bibi21000/janitoo_manager/archive/master.zip#egg=janitoo_manager',
     ],
     #include_package_data=True,
     include_package_data=True,
