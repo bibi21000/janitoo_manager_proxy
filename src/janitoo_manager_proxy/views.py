@@ -44,7 +44,7 @@ from flask import Response, url_for
 from werkzeug.datastructures import Headers
 from werkzeug.exceptions import NotFound
 from flask_themes2 import get_themes_list
-from flask_babelex import gettext as _
+from flask_babelplus import gettext as _
 
 from janitoo_manager.extensions import babel, janitoo
 from janitoo_manager.utils.helpers import render_template
