@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>janitoo_manager_proxy.views &mdash; janitoo_manager_proxy 0.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinxcontrib-images/LightBox2/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2/js/lightbox.min.js"></script>
+    <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="janitoo_manager_proxy 0.0.8 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          janitoo_manager_proxy</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.8</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../tools/index.html">Tools</a></li>
+                <li><a href="../../api/index.html">Reference</a></li>
+                <li><a href="../../extensions/index.html">Janitoo extensions</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="simple">
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for janitoo_manager_proxy.views</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;The proxy views</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__license__</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+
+<span class="s">This file is part of **janitoo** project https://github.com/bibi21000/janitoo.</span>
+
+<span class="s">License : GPL(v3)</span>
+
+<span class="s">**janitoo** is free software: you can redistribute it and/or modify</span>
+<span class="s">it under the terms of the GNU General Public License as published by</span>
+<span class="s">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="s">(at your option) any later version.</span>
+
+<span class="s">**janitoo** is distributed in the hope that it will be useful,</span>
+<span class="s">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="s">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="s">GNU General Public License for more details.</span>
+<span class="s">You should have received a copy of the GNU General Public License</span>
+<span class="s">along with janitoo. If not, see http://www.gnu.org/licenses.</span>
+<span class="s">&quot;&quot;&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Sébastien GALLET aka bibi21000&#39;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s">&#39;bibi21000@gmail.com&#39;</span>
+<span class="c">#~ from gevent import monkey</span>
+<span class="c">#~ monkey.patch_all()</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">import</span> <span class="nn">httplib</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">flash</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">current_app</span><span class="p">,</span> <span class="n">g</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Response</span><span class="p">,</span> <span class="n">url_for</span>
+<span class="kn">from</span> <span class="nn">werkzeug.datastructures</span> <span class="kn">import</span> <span class="n">Headers</span>
+<span class="kn">from</span> <span class="nn">werkzeug.exceptions</span> <span class="kn">import</span> <span class="n">NotFound</span>
+<span class="kn">from</span> <span class="nn">flask_themes2</span> <span class="kn">import</span> <span class="n">get_themes_list</span>
+<span class="kn">from</span> <span class="nn">flask_babelplus</span> <span class="kn">import</span> <span class="n">gettext</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">janitoo_manager.extensions</span> <span class="kn">import</span> <span class="n">babel</span><span class="p">,</span> <span class="n">janitoo</span>
+<span class="kn">from</span> <span class="nn">janitoo_manager.utils.helpers</span> <span class="kn">import</span> <span class="n">render_template</span>
+
+<span class="c">#~ from flask import Flask, render_template, session, request, current_app, g</span>
+<span class="c">#~ from flask.ext.socketio import SocketIO, emit, join_room, leave_room, close_room, disconnect</span>
+<span class="c">#~ from flask import Response, url_for</span>
+<span class="c">#~ from werkzeug.datastructures import Headers</span>
+<span class="c">#~ from werkzeug.exceptions import NotFound</span>
+<span class="c">#~</span>
+<span class="c">#~ from janitoo_web.app import socketio, app, sort_application_entries, sorted_application_entries</span>
+<span class="c">#~ from janitoo_web.app.listener import listener</span>
+
+<span class="c">#~ app.extensions[&#39;application_entries&#39;][&#39;/proxy&#39;] = { &#39;order&#39;:99, &#39;label&#39;:&#39;Proxy&#39;}</span>
+<span class="c">#~ app.extensions[&#39;sorted_application_entries&#39;] = sort_application_entries(app.extensions[&#39;application_entries&#39;])</span>
+
+<span class="c"># You can insert Authentication here.</span>
+<span class="c">#proxy.before_request(check_login)</span>
+
+<span class="c"># Filters.</span>
+<span class="n">HTML_REGEX</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;((?:src|action|href)=[&quot;</span><span class="se">\&#39;</span><span class="s">])/&#39;</span><span class="p">)</span>
+<span class="n">JQUERY_REGEX</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;(\$\.(?:get|post)\([&quot;</span><span class="se">\&#39;</span><span class="s">])/&#39;</span><span class="p">)</span>
+<span class="n">JS_LOCATION_REGEX</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;((?:window|document)\.location.*=.*[&quot;</span><span class="se">\&#39;</span><span class="s">])/&#39;</span><span class="p">)</span>
+<span class="n">CSS_REGEX</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;(url\([&quot;</span><span class="se">\&#39;</span><span class="s">]?)/&#39;</span><span class="p">)</span>
+
+<span class="n">REGEXES</span> <span class="o">=</span> <span class="p">[</span><span class="n">HTML_REGEX</span><span class="p">,</span> <span class="n">JQUERY_REGEX</span><span class="p">,</span> <span class="n">JS_LOCATION_REGEX</span><span class="p">,</span> <span class="n">CSS_REGEX</span><span class="p">]</span>
+
+<div class="viewcode-block" id="get_blueprint"><a class="viewcode-back" href="../../api/index.html#janitoo_manager_proxy.views.get_blueprint">[docs]</a><span class="k">def</span> <span class="nf">get_blueprint</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">proxy</span><span class="p">,</span> <span class="s">&quot;/proxy&quot;</span>
+</div>
+<div class="viewcode-block" id="get_leftmenu"><a class="viewcode-back" href="../../api/index.html#janitoo_manager_proxy.views.get_leftmenu">[docs]</a><span class="k">def</span> <span class="nf">get_leftmenu</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">&quot;&lt;a href=&#39;/proxy/&#39;&gt;Proxy&lt;/a&gt;&quot;</span>
+</div>
+<div class="viewcode-block" id="iterform"><a class="viewcode-back" href="../../api/index.html#janitoo_manager_proxy.views.iterform">[docs]</a><span class="k">def</span> <span class="nf">iterform</span><span class="p">(</span><span class="n">multidict</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">multidict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">multidict</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&quot;utf8&quot;</span><span class="p">),</span> <span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&quot;utf8&quot;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="parse_host_port"><a class="viewcode-back" href="../../api/index.html#janitoo_manager_proxy.views.parse_host_port">[docs]</a><span class="k">def</span> <span class="nf">parse_host_port</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parses strings in the form host[:port]&quot;&quot;&quot;</span>
+    <span class="n">host_port</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">host_port</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">host_port</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">host_port</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">host_port</span>
+</div>
+<span class="n">proxy</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s">&quot;proxy&quot;</span><span class="p">,</span> <span class="n">__name__</span><span class="p">,</span> <span class="n">template_folder</span><span class="o">=</span><span class="s">&#39;templates&#39;</span><span class="p">,</span> <span class="n">static_folder</span><span class="o">=</span><span class="s">&#39;static&#39;</span><span class="p">)</span>
+
+<span class="nd">@proxy.route</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+<span class="nd">@proxy.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../api/index.html#janitoo_manager_proxy.views.index">[docs]</a><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="n">network</span><span class="o">=</span><span class="n">janitoo</span><span class="o">.</span><span class="n">listener</span><span class="o">.</span><span class="n">network</span>
+    <span class="n">web_servers</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">find_webcontrollers</span><span class="p">()</span>
+    <span class="n">web_resources</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">find_webresources</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;proxy/index.html&#39;</span><span class="p">,</span> <span class="n">web_servers</span><span class="o">=</span><span class="n">web_servers</span><span class="p">,</span> <span class="n">web_resources</span><span class="o">=</span><span class="n">web_resources</span><span class="p">)</span>
+</div>
+<span class="nd">@proxy.route</span><span class="p">(</span><span class="s">&#39;/&lt;string:host&gt;&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="s">&quot;POST&quot;</span><span class="p">,</span> <span class="s">&quot;PUT&quot;</span><span class="p">,</span> <span class="s">&quot;DELETE&quot;</span><span class="p">])</span>
+<span class="nd">@proxy.route</span><span class="p">(</span><span class="s">&#39;/&lt;string:host&gt;/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="s">&quot;POST&quot;</span><span class="p">,</span> <span class="s">&quot;PUT&quot;</span><span class="p">,</span> <span class="s">&quot;DELETE&quot;</span><span class="p">])</span>
+<span class="nd">@proxy.route</span><span class="p">(</span><span class="s">&#39;/&lt;string:host&gt;/&lt;path:file&gt;&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="s">&quot;POST&quot;</span><span class="p">,</span> <span class="s">&quot;PUT&quot;</span><span class="p">,</span> <span class="s">&quot;DELETE&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="proxy_request"><a class="viewcode-back" href="../../api/index.html#janitoo_manager_proxy.views.proxy_request">[docs]</a><span class="k">def</span> <span class="nf">proxy_request</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+    <span class="n">hostname</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">parse_host_port</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+
+    <span class="c">#~ print &quot;H: &#39;%s&#39; P: %d&quot; % (hostname, port)</span>
+    <span class="c">#~ print &quot;F: &#39;%s&#39;&quot; % (file)</span>
+    <span class="c"># Whitelist a few headers to pass on</span>
+    <span class="n">request_headers</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Cookie&quot;</span><span class="p">,</span> <span class="s">&quot;Referer&quot;</span><span class="p">,</span> <span class="s">&quot;X-Csrf-Token&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+            <span class="n">request_headers</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">query_string</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/</span><span class="si">%s</span><span class="s">?</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">query_string</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">file</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;PUT&quot;</span><span class="p">:</span>
+        <span class="n">form_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterform</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">))</span>
+        <span class="n">form_data</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">form_data</span><span class="p">)</span>
+        <span class="n">request_headers</span><span class="p">[</span><span class="s">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">form_data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form_data</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">form_data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">request_headers</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+
+    <span class="c"># Clean up response headers for forwarding</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="n">Headers</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">getheaders</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&quot;HEADER: &#39;</span><span class="si">%s</span><span class="s">&#39;:&#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;content-length&quot;</span><span class="p">,</span> <span class="s">&quot;connection&quot;</span><span class="p">,</span> <span class="s">&quot;content-type&quot;</span><span class="p">]:</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;set-cookie&quot;</span><span class="p">:</span>
+            <span class="n">cookies</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+            <span class="p">[</span><span class="n">response_headers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cookies</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response_headers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="c"># If this is a redirect, munge the Location URL</span>
+    <span class="k">if</span> <span class="s">&quot;location&quot;</span> <span class="ow">in</span> <span class="n">response_headers</span><span class="p">:</span>
+        <span class="n">redirect</span> <span class="o">=</span> <span class="n">response_headers</span><span class="p">[</span><span class="s">&quot;location&quot;</span><span class="p">]</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">redirect_parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">redirect</span><span class="p">)</span>
+
+        <span class="n">redirect_host</span> <span class="o">=</span> <span class="n">redirect_parsed</span><span class="o">.</span><span class="n">netloc</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">redirect_host</span><span class="p">:</span>
+            <span class="n">redirect_host</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">:</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+
+        <span class="n">redirect_path</span> <span class="o">=</span> <span class="n">redirect_parsed</span><span class="o">.</span><span class="n">path</span>
+        <span class="k">if</span> <span class="n">redirect_parsed</span><span class="o">.</span><span class="n">query</span><span class="p">:</span>
+            <span class="n">redirect_path</span> <span class="o">+=</span> <span class="s">&quot;?&quot;</span> <span class="o">+</span> <span class="n">redirect_parsed</span><span class="o">.</span><span class="n">query</span>
+
+        <span class="n">munged_path</span> <span class="o">=</span> <span class="n">url_for</span><span class="p">(</span><span class="s">&quot;.proxy_request&quot;</span><span class="p">,</span>
+                              <span class="n">host</span><span class="o">=</span><span class="n">redirect_host</span><span class="p">,</span>
+                              <span class="nb">file</span><span class="o">=</span><span class="n">redirect_path</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span> <span class="n">munged_path</span><span class="p">)</span>
+        <span class="n">response_headers</span><span class="p">[</span><span class="s">&quot;location&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url</span>
+
+    <span class="c"># Rewrite URLs in the content to point to our URL schemt.method == &quot; instead.</span>
+    <span class="c"># Ugly, but seems to mostly work.</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">url_for</span><span class="p">(</span><span class="s">&quot;.proxy_request&quot;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
+    <span class="n">contents</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="c">#~ print root</span>
+    <span class="c">#~ print contents</span>
+    <span class="c"># Restructing Contents.</span>
+    <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s">&quot;content-type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c"># JSON format conentens will be modified here.</span>
+        <span class="n">jc</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">jc</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;nodes&quot;</span><span class="p">):</span>
+            <span class="k">del</span> <span class="n">jc</span><span class="p">[</span><span class="s">&quot;nodes&quot;</span><span class="p">]</span>
+        <span class="n">contents</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">jc</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># Generic HTTP.</span>
+        <span class="k">for</span> <span class="n">regex</span> <span class="ow">in</span> <span class="n">REGEXES</span><span class="p">:</span>
+           <span class="n">contents</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\1</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">root</span><span class="p">,</span> <span class="n">contents</span><span class="p">)</span>
+
+    <span class="c">#~ print contents</span>
+    <span class="n">flask_response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">contents</span><span class="p">,</span>
+                              <span class="n">status</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                              <span class="n">headers</span><span class="o">=</span><span class="n">response_headers</span><span class="p">,</span>
+                              <span class="n">content_type</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="s">&#39;content-type&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">flask_response</span>
+</pre></div></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014,2015,2016 Sébastien GALLET aka bibi2100 &lt;bibi21000@gmail.com&gt;.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

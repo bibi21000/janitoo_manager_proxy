@@ -1,0 +1,30 @@
+janitoo_manager_proxy package
+=============================
+
+Submodules
+----------
+
+janitoo_manager_proxy.network module
+------------------------------------
+
+.. automodule:: janitoo_manager_proxy.network
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+janitoo_manager_proxy.views module
+----------------------------------
+
+.. automodule:: janitoo_manager_proxy.views
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: janitoo_manager_proxy
+    :members:
+    :undoc-members:
+    :show-inheritance:
