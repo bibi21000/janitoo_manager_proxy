@@ -32,10 +32,8 @@ logger = logging.getLogger(__name__)
 import os, sys
 import time
 from threading import Thread
-import httplib
 import re
 import urllib
-import urlparse
 import json
 
 from flask import Blueprint, flash
@@ -45,6 +43,10 @@ from werkzeug.datastructures import Headers
 from werkzeug.exceptions import NotFound
 from flask_themes2 import get_themes_list
 from flask_babelplus import gettext as _
+
+from janitoo.compat import HTTPConnection
+from janitoo.compat import urlparse
+
 
 from janitoo_manager.extensions import babel, janitoo
 from janitoo_manager.utils.helpers import render_template
@@ -128,7 +130,7 @@ def proxy_request(host, file=""):
     else:
         form_data = None
 
-    conn = httplib.HTTPConnection(hostname, port)
+    conn = HTTPConnection(hostname, port)
     conn.request(request.method, path, body=form_data, headers=request_headers)
     resp = conn.getresponse()
 
@@ -136,7 +138,7 @@ def proxy_request(host, file=""):
     d = {}
     response_headers = Headers()
     for key, value in resp.getheaders():
-        print "HEADER: '%s':'%s'" % (key, value)
+        print("HEADER: '%s':'%s'" % (key, value))
         d[key.lower()] = value
         if key in ["content-length", "connection", "content-type"]:
             continue
@@ -150,8 +152,8 @@ def proxy_request(host, file=""):
     # If this is a redirect, munge the Location URL
     if "location" in response_headers:
         redirect = response_headers["location"]
-        parsed = urlparse.urlparse(request.url)
-        redirect_parsed = urlparse.urlparse(redirect)
+        parsed = urlparse(request.url)
+        redirect_parsed = urlparse(redirect)
 
         redirect_host = redirect_parsed.netloc
         if not redirect_host:

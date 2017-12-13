@@ -9,8 +9,8 @@
       <h2>Collected web resources</h2>
       <h3>Nodes :</h3>
       <dl>
-          {% for keynode, node in web_servers.iteritems() %}
-            {% for keyvalue, value in node.iteritems() %}
+          {% for keynode, node in iteritems(web_servers) %}
+            {% for keyvalue, value in iteritems(node) %}
                 {% for index in value %}
                     <dd>{{ keynode }} : {{ value[index]['label'] }} ({{ value[index]['help'] }}) </dd>
                 {% endfor %}
@@ -20,8 +20,8 @@
 
       <h3>Resources :</h3>
       <dl>
-          {% for keynode, node in web_resources.iteritems() %}
-            {% for keyvalue, value in node.iteritems() %}
+          {% for keynode, node in iteritems(web_resources) %}
+            {% for keyvalue, value in iteritems(node) %}
                 {% for index in value %}
                     <dd>{{ keynode }} : <a id="{{ value[index]['hadd'] }}_{{ value[index]['uuid'] }}_{{ value[index]['index'] }}" href="/proxy/{{ value[index]['data'] }}">{{ value[index]['uuid'] }} {{ value[index]['label'] }} ({{ value[index]['help'] }})</a> </dd>
                         <script type="text/javascript">
